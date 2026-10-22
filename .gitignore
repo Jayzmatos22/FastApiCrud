@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Banco local
+*.db
+*.sqlite3
+
+# Variaveis de ambiente
+.env
+
+# Editores
+.vscode/
+.idea/

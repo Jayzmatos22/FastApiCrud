@@ -1,5 +1,14 @@
+# Aplicacao
 fastapi
 uvicorn[standard]
 sqlalchemy
 pydantic[email]
-passlib[bcrypt]
+pydantic-settings
+pwdlib[bcrypt]
+
+# Migrations
+alembic
+
+# Testes
+pytest
+httpx2

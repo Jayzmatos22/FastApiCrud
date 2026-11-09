@@ -12,7 +12,6 @@ class User(Base):
         CheckConstraint("length(name) >= 2", name="ck_users_name_min"),
         UniqueConstraint("email", name="uq_users_email"),
         Index("ix_users_name_active", "name", "active"),
-            {"schema": "public"},
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)

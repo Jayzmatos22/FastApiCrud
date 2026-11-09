@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.user import User
-from app.schema.user_schema import CreateUser, ResponseUser
-from app.service.user import create_new_user, get_user_by_email
+from app.schema.user_schema import CreateUser, ResponseUser, UpdateUser
+from app.service.user import create_new_user, get_user_by_email, update_user, delete_user
 
 DbSession = Annotated[Session, Depends(get_db)]
 
@@ -26,8 +26,24 @@ def register(user: CreateUser, db: DbSession) -> User:
     "/{email}", response_model=ResponseUser,
     status_code=status.HTTP_200_OK
 )
-def read_user_by_email(db: DbSession, email: str) -> User:
+def get_user_email(db: DbSession, email: str) -> User | None:
     user = get_user_by_email(db, email)
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Usuário não encontrado")
     return user
+
+
+@router.patch(
+    "/{user_id}",
+    response_model=ResponseUser,
+    status_code=status.HTTP_200_OK
+)
+def update_current_user(user_id: int, dados: UpdateUser, db: DbSession):
+    return update_user(db, user_id, dados)
+
+@router.delete(
+    "/{user_id}",
+    status_code=status.HTTP_204_NO_CONTENT
+)
+def remover(user_id: int, db: DbSession):
+    delete_user(db, user_id)

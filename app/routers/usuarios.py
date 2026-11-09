@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -26,11 +26,8 @@ def register(user: CreateUser, db: DbSession) -> User:
     "/{email}", response_model=ResponseUser,
     status_code=status.HTTP_200_OK
 )
-def get_user_email(db: DbSession, email: str) -> User | None:
-    user = get_user_by_email(db, email)
-    if not user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Usuário não encontrado")
-    return user
+def get_user_email(db: DbSession, email: str) -> User:
+    return get_user_by_email(db, email)
 
 
 @router.patch(

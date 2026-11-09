@@ -10,7 +10,7 @@ class User(Base):
     __tablename__ = "users"
     __table_args__ = (
         CheckConstraint("length(name) >= 2", name="ck_users_name_min"),
-        UniqueConstraint("email", "tenant_id", name="uq_email_tenant"),
+        UniqueConstraint("email", name="uq_users_email"),
         Index("ix_users_name_active", "name", "active"),
             {"schema": "public"},
     )

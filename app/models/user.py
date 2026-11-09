@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, CheckConstraint, DateTime, String, func
+from sqlalchemy import Boolean, CheckConstraint, DateTime, String, func, UniqueConstraint, Index
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
@@ -10,6 +10,9 @@ class User(Base):
     __tablename__ = "users"
     __table_args__ = (
         CheckConstraint("length(name) >= 2", name="ck_users_name_min"),
+        UniqueConstraint("email", "tenant_id", name="uq_email_tenant"),
+        Index("ix_users_name_active", "name", "active"),
+            {"schema": "public"},
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
